@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E3165B362376A9AF00975748 /* ViewControllerQuestionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */; };
+		E3165B382376AA7F00975748 /* ViewControllerQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */; };
 		E394BF1B236EEA6500B9B70B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394BF1A236EEA6500B9B70B /* AppDelegate.swift */; };
 		E394BF1D236EEA6500B9B70B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394BF1C236EEA6500B9B70B /* ViewController.swift */; };
 		E394BF20236EEA6500B9B70B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E394BF1E236EEA6500B9B70B /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerQuestionsList.swift; sourceTree = "<group>"; };
+		E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerQuestion.swift; sourceTree = "<group>"; };
 		E394BF17236EEA6500B9B70B /* stackViwer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stackViwer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E394BF1A236EEA6500B9B70B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E394BF1C236EEA6500B9B70B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +64,8 @@
 				E394BF21236EEA6A00B9B70B /* Assets.xcassets */,
 				E394BF23236EEA6A00B9B70B /* LaunchScreen.storyboard */,
 				E394BF26236EEA6A00B9B70B /* Info.plist */,
+				E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */,
+				E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */,
 			);
 			path = stackViwer;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			files = (
 				E394BF1D236EEA6500B9B70B /* ViewController.swift in Sources */,
 				E394BF1B236EEA6500B9B70B /* AppDelegate.swift in Sources */,
+				E3165B382376AA7F00975748 /* ViewControllerQuestion.swift in Sources */,
+				E3165B362376A9AF00975748 /* ViewControllerQuestionsList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
