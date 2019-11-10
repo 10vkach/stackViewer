@@ -14,12 +14,18 @@ class ViewControllerQuestion: UITableViewController {
     
 //TAbleView start
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellQuestionID", for: indexPath) as? CellQuestion else {
             return UITableViewCell()
+        }
+        
+        cell.clear()
+        if indexPath.row == 0 {
+            cell.backgroundColor = .yellow
+            cell.imageIsAnswerWidth.constant = 0
         }
         
         return cell
