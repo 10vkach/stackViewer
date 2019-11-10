@@ -37,6 +37,59 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
         pickerView.alpha = 0.95
     }
     
+    //Загрузить первую страницу вопросов (использовать при смене тэга и запуске программы)
+    func loadFirstPage() {
+        //Показать колесо загрузки
+        
+        //Загрузить данные в отдельном потоке
+        
+        
+        if let tag = navigationItem.title,
+            let url = getURL(ForPage: 1, WithTag: tag) {
+            
+            let task = URLSession.shared.dataTask(with: url,
+                                                  completionHandler: { self.parseResponse(data: $0,
+                                                                                          response: $1,
+                                                                                          error: $2) })
+            task.resume()   //Вот это в одтельном потоке
+        }
+    }
+    
+    //Обработать ответ от сервера
+    func parseResponse(data: Data?, response: URLResponse?, error: Error?) {
+        //Вырубить колесо загрузки в основном потоке
+        
+        //Если получили ошибку, то вывести в лог и прерваться
+        guard error == nil else {
+            print("error - > \(error!) \nresponse -> \(String(describing: response))")          //добавить показ алерта
+            return
+        }
+        
+        if let dataSafe = data {
+            //распарсить данные и запихать их в массив
+            
+            tableView.reloadData()          //В основном потоке!
+        }
+    }
+    
+    //Создать запрос с указанной страницей и тэгом
+    func getURL(ForPage page: Int,
+                WithTag tag: String) -> URL? {
+        var request = URLComponents()
+        request.scheme = "https"
+        request.host = "api.stackexchange.com"
+        request.path = "/2.2/questions"
+        request.queryItems = [
+            URLQueryItem(name: "page", value: "\(page)"),
+            URLQueryItem(name: "tagged", value: tag),
+            URLQueryItem(name: "pagesize", value: "20"),
+            URLQueryItem(name: "sort", value: "creation"),
+            URLQueryItem(name: "site", value: "stackoverflow"),
+            URLQueryItem(name: "order", value: "asc")
+        ]
+        return request.url
+    }
+    
     //Показать окно выбора тэга
     @objc func showTagSelector() {
         if pickerView.superview == nil {
@@ -86,16 +139,12 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
                     inComponent component: Int) {
         
         pickerView.removeFromSuperview()
-        
         //Если выбран другой тег, то загрузить новые вопросы
         if navigationItem.title != tags[row] {
             //Загрузить вопросы по тэгу
         }
-        
         navigationItem.title = tags[row]
-        
         tableView.isScrollEnabled = true                       //Включить выключенную возможность
-        
     }
     
 //PickerView end
