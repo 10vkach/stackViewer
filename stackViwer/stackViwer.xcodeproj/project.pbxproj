@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E3165B362376A9AF00975748 /* ViewControllerQuestionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */; };
 		E3165B382376AA7F00975748 /* ViewControllerQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */; };
+		E3165B3A2378136700975748 /* CellQuestionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B392378136700975748 /* CellQuestionList.swift */; };
+		E3165B3C2378309300975748 /* CellQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B3B2378309300975748 /* CellQuestion.swift */; };
 		E394BF1B236EEA6500B9B70B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394BF1A236EEA6500B9B70B /* AppDelegate.swift */; };
 		E394BF1D236EEA6500B9B70B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394BF1C236EEA6500B9B70B /* ViewController.swift */; };
 		E394BF20236EEA6500B9B70B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E394BF1E236EEA6500B9B70B /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerQuestionsList.swift; sourceTree = "<group>"; };
 		E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerQuestion.swift; sourceTree = "<group>"; };
+		E3165B392378136700975748 /* CellQuestionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellQuestionList.swift; sourceTree = "<group>"; };
+		E3165B3B2378309300975748 /* CellQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellQuestion.swift; sourceTree = "<group>"; };
 		E394BF17236EEA6500B9B70B /* stackViwer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stackViwer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E394BF1A236EEA6500B9B70B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E394BF1C236EEA6500B9B70B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 				E394BF26236EEA6A00B9B70B /* Info.plist */,
 				E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */,
 				E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */,
+				E3165B392378136700975748 /* CellQuestionList.swift */,
+				E3165B3B2378309300975748 /* CellQuestion.swift */,
 			);
 			path = stackViwer;
 			sourceTree = "<group>";
@@ -142,7 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E394BF1D236EEA6500B9B70B /* ViewController.swift in Sources */,
+				E3165B3A2378136700975748 /* CellQuestionList.swift in Sources */,
 				E394BF1B236EEA6500B9B70B /* AppDelegate.swift in Sources */,
+				E3165B3C2378309300975748 /* CellQuestion.swift in Sources */,
 				E3165B382376AA7F00975748 /* ViewControllerQuestion.swift in Sources */,
 				E3165B362376A9AF00975748 /* ViewControllerQuestionsList.swift in Sources */,
 			);

@@ -34,7 +34,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
                                   width: UIScreen.main.bounds.width,
                                   height: UIScreen.main.bounds.height - navigationController!.navigationBar.frame.maxY)
         pickerView.backgroundColor = .lightGray
-        pickerView.alpha = 0.8
+        pickerView.alpha = 0.95
     }
     
     //Показать окно выбора тэга
@@ -53,7 +53,12 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionListCell", for: indexPath) as? CellQuestionList {
+            
+            return cell
+        } else {
+            return UITableViewCell()
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -90,6 +95,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
         navigationItem.title = tags[row]
         
         tableView.isScrollEnabled = true                       //Включить выключенную возможность
+        
     }
     
 //PickerView end
