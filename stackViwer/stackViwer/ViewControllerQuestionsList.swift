@@ -15,7 +15,8 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
         "iphone"
     ]
     
-    let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))                       //Показывает выбор тэга
+    let activityView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))          //Показывать, когда идёт загрузка с сервера
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,65 +36,33 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
                                   height: UIScreen.main.bounds.height - navigationController!.navigationBar.frame.maxY)
         pickerView.backgroundColor = .lightGray
         pickerView.alpha = 0.95
-    }
-    
-    //Загрузить первую страницу вопросов (использовать при смене тэга и запуске программы)
-    func loadFirstPage() {
-        //Показать колесо загрузки
         
-        //Загрузить данные в отдельном потоке
+        //Настройка activityView
+        activityView.frame = CGRect(x: 0,
+                                    y: 0,
+                                    width: UIScreen.main.bounds.width,
+                                    height: UIScreen.main.bounds.height)
+        activityView.color = .black
+        activityView.backgroundColor = .lightGray
+        activityView.alpha = 0.9
+        navigationController?.view.addSubview(activityView)
         
-        
-        if let tag = navigationItem.title,
-            let url = getURL(ForPage: 1, WithTag: tag) {
-            
-            let task = URLSession.shared.dataTask(with: url,
-                                                  completionHandler: { self.parseResponse(data: $0,
-                                                                                          response: $1,
-                                                                                          error: $2) })
-            task.resume()   //Вот это в одтельном потоке
+        if let tag = navigationItem.title {
+            stackLoader.loadFirstPage(WithTag: tag,
+                                      completion: {
+                                            self.loadedSuccefull()
+                                        },
+                                      errorCompletion: {
+                                            self.loadedFail(WithError: $0)
+                                        })
+            activityView.startAnimating()
         }
-    }
-    
-    //Обработать ответ от сервера
-    func parseResponse(data: Data?, response: URLResponse?, error: Error?) {
-        //Вырубить колесо загрузки в основном потоке
-        
-        //Если получили ошибку, то вывести в лог и прерваться
-        guard error == nil else {
-            print("error - > \(error!) \nresponse -> \(String(describing: response))")          //добавить показ алерта
-            return
-        }
-        
-        if let dataSafe = data {
-            //распарсить данные и запихать их в массив
-            
-            tableView.reloadData()          //В основном потоке!
-        }
-    }
-    
-    //Создать запрос с указанной страницей и тэгом
-    func getURL(ForPage page: Int,
-                WithTag tag: String) -> URL? {
-        var request = URLComponents()
-        request.scheme = "https"
-        request.host = "api.stackexchange.com"
-        request.path = "/2.2/questions"
-        request.queryItems = [
-            URLQueryItem(name: "page", value: "\(page)"),
-            URLQueryItem(name: "tagged", value: tag),
-            URLQueryItem(name: "pagesize", value: "20"),
-            URLQueryItem(name: "sort", value: "creation"),
-            URLQueryItem(name: "site", value: "stackoverflow"),
-            URLQueryItem(name: "order", value: "asc")
-        ]
-        return request.url
     }
     
     //Показать окно выбора тэга
     @objc func showTagSelector() {
         if pickerView.superview == nil {
-            tableView.isScrollEnabled = false              //Чтобы не было прокрутки во время выбора тега
+            tableView.isScrollEnabled = false              //Чтобы не было прокрутки таблицы во время выбора тега
             navigationController?.view.addSubview(pickerView)
         } else {
             pickerView.removeFromSuperview()
@@ -102,12 +71,12 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
     
 //TableView start
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return stackLoader.questionsList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionListCell", for: indexPath) as? CellQuestionList {
-            
+            cell.configure(WithQuestion: stackLoader.questionsList[indexPath.row])
             return cell
         } else {
             return UITableViewCell()
@@ -141,11 +110,34 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
         pickerView.removeFromSuperview()
         //Если выбран другой тег, то загрузить новые вопросы
         if navigationItem.title != tags[row] {
-            //Загрузить вопросы по тэгу
+            activityView.startAnimating()
+            stackLoader.loadFirstPage(WithTag: tags[row],
+                                      completion: {
+                                            self.loadedSuccefull()
+                                        },
+                                      errorCompletion: {
+                                            self.loadedFail(WithError: $0)
+                                        })
         }
         navigationItem.title = tags[row]
-        tableView.isScrollEnabled = true                       //Включить выключенную возможность
+        tableView.isScrollEnabled = true                       //Чтобы снова появилась прокрутка таблицы после выбора тэга.
     }
     
 //PickerView end
+    
+//Completions start
+    private func loadedSuccefull() {
+        tableView.setContentOffset(.zero, animated: false)
+        tableView.reloadData()
+        activityView.stopAnimating()
+    }
+    
+    private func loadedFail(WithError error: Error) {
+        tableView.setContentOffset(.zero, animated: false)
+        tableView.reloadData()
+        activityView.stopAnimating()
+        //Показать сообщение с ошибкой
+    }
+    
+//Completions end
 }

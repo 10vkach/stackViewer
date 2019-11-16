@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-class ViewControllerQuestion: UITableViewController {
+class ViewControllerQuestion: UITableViewController/*, StackLoaderDelegate */{
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,5 +31,5 @@ class ViewControllerQuestion: UITableViewController {
         return cell
     }
 //TableView end
-    
+
 }
