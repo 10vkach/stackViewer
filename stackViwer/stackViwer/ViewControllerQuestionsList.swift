@@ -127,16 +127,31 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
     
 //Completions start
     private func loadedSuccefull() {
-        tableView.setContentOffset(.zero, animated: false)
         tableView.reloadData()
+        //Прокрутить наверх, если он есть.
+        if !stackLoader.questionsList.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0),
+                                  at: .top,
+                                  animated: false)
+        }
         activityView.stopAnimating()
     }
     
     private func loadedFail(WithError error: Error) {
-        tableView.setContentOffset(.zero, animated: false)
         tableView.reloadData()
         activityView.stopAnimating()
         //Показать сообщение с ошибкой
+        let alert = UIAlertController(title: "Error",
+                                      message: "Load Failure",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK",
+                              style: .default,
+                              handler: {
+                                _ in
+                                    self.dismiss(animated: true,
+                                                 completion: nil)
+                                } ))
+        present(alert, animated: true, completion: nil)
     }
     
 //Completions end

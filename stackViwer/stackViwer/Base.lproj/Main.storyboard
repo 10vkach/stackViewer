@@ -123,6 +123,7 @@
                                     <outlet property="labelAnswersCount" destination="Ni5-Pr-kMy" id="GYS-xm-Hy4"/>
                                     <outlet property="labelAskedTime" destination="QRP-8l-KKr" id="mQT-4O-Duy"/>
                                     <outlet property="labelAuthorName" destination="b1U-Ew-KoZ" id="kzv-Se-1ZR"/>
+                                    <outlet property="labelModified" destination="FwU-xh-5zC" id="Ebm-bv-KSs"/>
                                     <outlet property="labelQuestionShortText" destination="zzj-k5-j8v" id="PsW-Ic-QA5"/>
                                 </connections>
                             </tableViewCell>
