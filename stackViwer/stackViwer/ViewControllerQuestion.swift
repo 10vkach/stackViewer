@@ -9,12 +9,14 @@ class ViewControllerQuestion: UITableViewController/*, StackLoaderDelegate */{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
-//TAbleView start
+//TableView start
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        if let answersCount = stackLoader.questionDetailed?.answers.count {
+            return 1 + answersCount
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -22,10 +24,10 @@ class ViewControllerQuestion: UITableViewController/*, StackLoaderDelegate */{
             return UITableViewCell()
         }
         
-        cell.clear()
         if indexPath.row == 0 {
-            cell.backgroundColor = .yellow
-            cell.imageIsAnswerWidth.constant = 0
+            cell.configureQuestion()
+        } else {
+            cell.configureAnswer(WithIndex: indexPath.row - 1)
         }
         
         return cell

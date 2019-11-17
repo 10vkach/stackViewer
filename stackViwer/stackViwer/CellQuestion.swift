@@ -26,4 +26,42 @@ class CellQuestion: UITableViewCell {
         backgroundColor = .clear
     }
     
+    func configureQuestion() {
+        clear()
+        backgroundColor = .yellow
+        imageIsAnswerWidth.constant = 0
+        if let que = stackLoader.questionDetailed?.question {
+            labelAuthor.text = que.owner.display_name
+            labelRating.text = "\(que.score)"
+            labelDate.text = que.last_edit_date?.smartModified() ?? " "
+            labelAnswer.text = tagRemoved(From: que.body)
+        }
+    }
+    
+    func configureAnswer(WithIndex index: Int) {
+        clear()
+        if let answer = stackLoader.questionDetailed?.answers[index] {
+            if answer.is_accepted {
+                imageIsAnswer.isHidden = false
+                imageIsAnswerWidth.constant = 50
+            }
+            labelRating.text = "\(answer.score)"
+            labelAuthor.text = answer.owner.display_name
+            labelDate.text = answer.last_activity_date.smartModified()
+            labelAnswer.text = tagRemoved(From: answer.body)
+        }
+    }
+    
+    private func tagRemoved(From str: String) -> String {
+        
+        let bodyWithEOL = str.replacingOccurrences(of: "<br>",
+                                                   with: "\n",
+                                                   options: .caseInsensitive,
+                                                   range: nil)
+        let bodyWithoutTags = bodyWithEOL.replacingOccurrences(of: "<[^>]+>",
+                                                               with: "",
+                                                               options: .regularExpression,
+                                                               range: nil)
+        return bodyWithoutTags
+    }
 }

@@ -17,6 +17,7 @@
 		E394BF20236EEA6500B9B70B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E394BF1E236EEA6500B9B70B /* Main.storyboard */; };
 		E394BF22236EEA6A00B9B70B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E394BF21236EEA6A00B9B70B /* Assets.xcassets */; };
 		E394BF25236EEA6A00B9B70B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E394BF23236EEA6A00B9B70B /* LaunchScreen.storyboard */; };
+		E3A69D222381A27B008030B1 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A69D212381A27B008030B1 /* DoubleExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E394BF21236EEA6A00B9B70B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E394BF24236EEA6A00B9B70B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E394BF26236EEA6A00B9B70B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3A69D212381A27B008030B1 /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				E3165B392378136700975748 /* CellQuestionList.swift */,
 				E3165B3B2378309300975748 /* CellQuestion.swift */,
 				E356EEAD2379B11C00CF245E /* StackLoader.swift */,
+				E3A69D212381A27B008030B1 /* DoubleExtension.swift */,
 			);
 			path = stackViwer;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3A69D222381A27B008030B1 /* DoubleExtension.swift in Sources */,
 				E394BF1D236EEA6500B9B70B /* ViewController.swift in Sources */,
 				E3165B3A2378136700975748 /* CellQuestionList.swift in Sources */,
 				E356EEAE2379B11D00CF245E /* StackLoader.swift in Sources */,

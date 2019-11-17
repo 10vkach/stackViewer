@@ -53,7 +53,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
                                             self.loadedSuccefull()
                                         },
                                       errorCompletion: {
-                                            self.loadedFail(WithError: $0)
+                                        self.loadedFail(WithError: $0, Title: "Startup Loading Questions Error")
                                         })
             activityView.startAnimating()
         }
@@ -84,7 +84,14 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "OpenViewControllerQuestion", sender: self)
+        activityView.startAnimating()
+        stackLoader.loadQuestionBody(WithID: stackLoader.questionsList[indexPath.row].question_id,
+                                     completion: {
+                                            self.questionBodyLoaded()
+                                        },
+                                     errorCompletion: {
+                                            self.loadedFail(WithError: $0, Title: "Loading Body Error")
+                                        })
     }
 //TableView end
     
@@ -116,7 +123,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
                                             self.loadedSuccefull()
                                         },
                                       errorCompletion: {
-                                            self.loadedFail(WithError: $0)
+                                        self.loadedFail(WithError: $0, Title: "Loading Questions Error")
                                         })
         }
         navigationItem.title = tags[row]
@@ -137,12 +144,12 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
         activityView.stopAnimating()
     }
     
-    private func loadedFail(WithError error: Error) {
+    private func loadedFail(WithError error: Error, Title title: String) {
         tableView.reloadData()
         activityView.stopAnimating()
         //Показать сообщение с ошибкой
-        let alert = UIAlertController(title: "Error",
-                                      message: "Load Failure",
+        let alert = UIAlertController(title: title,
+                                      message: error.localizedDescription,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK",
                               style: .default,
@@ -152,6 +159,11 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDataSource
                                                  completion: nil)
                                 } ))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func questionBodyLoaded() {
+        activityView.stopAnimating()
+        self.performSegue(withIdentifier: "OpenViewControllerQuestion", sender: self)
     }
     
 //Completions end
