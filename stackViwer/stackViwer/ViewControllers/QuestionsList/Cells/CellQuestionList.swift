@@ -1,7 +1,3 @@
-/*
- 
- */
-
 import Foundation
 import UIKit
 
@@ -13,7 +9,9 @@ class CellQuestionList: UITableViewCell {
     @IBOutlet weak var labelQuestionShortText: UILabel!         //Короткое описание вопроса (максимум 2 строки)
     @IBOutlet weak var labelAnswersCount: UILabel!              //Количество ответов
     
-    func clear(){
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
         labelAuthorName.text?.removeAll()
         labelAskedTime.text?.removeAll()
         labelModified.text?.removeAll()
@@ -22,7 +20,6 @@ class CellQuestionList: UITableViewCell {
     }
     
     func configure(WithQuestion question: Question) {
-        clear()
         labelAuthorName.text = "\(question.owner.display_name)"
         labelQuestionShortText.text = question.title
         labelAnswersCount.text = "\(question.answer_count)"
@@ -33,11 +30,8 @@ class CellQuestionList: UITableViewCell {
     }
     
     private func getSmartTime(seconds: Double?) -> String {
-        guard
-            let secondsSafe = seconds
-        else {
-                return ""
-        }
+        guard let secondsSafe = seconds else { return "" }
+        
         return secondsSafe.smartModified()
     }
     
