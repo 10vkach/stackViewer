@@ -1,37 +1,30 @@
-/*
- 
- */
-
 import Foundation
 import UIKit
 
-class ViewControllerQuestion: UITableViewController/*, StackLoaderDelegate */{
+class ViewControllerQuestion: UITableViewController{
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    var question: QuestionDetailed?
     
-//TableView start
+    //MARK: TableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let answersCount = stackLoader.questionDetailed?.answers.count {
-            return 1 + answersCount
-        }
-        return 0
+        guard let count = question?.answers.count else { return 0 }
+        print(count + 1)
+        return 1 + count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellQuestionID", for: indexPath) as? CellQuestion else {
-            return UITableViewCell()
-        }
+        let reuseCell = tableView.dequeueReusableCell(withIdentifier: "CellQuestion", for: indexPath)
+        guard
+            let questionSafe = question,
+            let cell = reuseCell as? CellQuestion
+            else { return UITableViewCell() }
         
         if indexPath.row == 0 {
-            cell.configureQuestion()
+            cell.configureQuestion(question: questionSafe.question)
         } else {
-            cell.configureAnswer(WithIndex: indexPath.row - 1)
+            cell.configureAnswer(withAnswer: questionSafe.answers[indexPath.row - 1])
         }
         
         return cell
     }
-//TableView end
-
 }

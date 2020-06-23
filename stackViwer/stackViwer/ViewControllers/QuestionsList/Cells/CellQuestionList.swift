@@ -12,6 +12,7 @@ class CellQuestionList: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         labelAuthorName.text?.removeAll()
         labelAskedTime.text?.removeAll()
         labelModified.text?.removeAll()

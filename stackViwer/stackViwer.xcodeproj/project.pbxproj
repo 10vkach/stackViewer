@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		324BD8F2249795CC0040A67E /* StackLoaderProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8F1249795CC0040A67E /* StackLoaderProtocols.swift */; };
+		324BD8F424979D760040A67E /* JSONParseStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8F324979D760040A67E /* JSONParseStructs.swift */; };
+		324BD8FA2498E6730040A67E /* TagPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8F92498E6730040A67E /* TagPickerView.swift */; };
+		324BD8FC249A18640040A67E /* ActivityIndicatorViewFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8FB249A18640040A67E /* ActivityIndicatorViewFullScreen.swift */; };
 		E3165B362376A9AF00975748 /* ViewControllerQuestionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */; };
 		E3165B382376AA7F00975748 /* ViewControllerQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */; };
 		E3165B3A2378136700975748 /* CellQuestionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3165B392378136700975748 /* CellQuestionList.swift */; };
@@ -20,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		324BD8F1249795CC0040A67E /* StackLoaderProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackLoaderProtocols.swift; sourceTree = "<group>"; };
+		324BD8F324979D760040A67E /* JSONParseStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParseStructs.swift; sourceTree = "<group>"; };
+		324BD8F92498E6730040A67E /* TagPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPickerView.swift; sourceTree = "<group>"; };
+		324BD8FB249A18640040A67E /* ActivityIndicatorViewFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewFullScreen.swift; sourceTree = "<group>"; };
 		E3165B352376A9AF00975748 /* ViewControllerQuestionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerQuestionsList.swift; sourceTree = "<group>"; };
 		E3165B372376AA7F00975748 /* ViewControllerQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerQuestion.swift; sourceTree = "<group>"; };
 		E3165B392378136700975748 /* CellQuestionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellQuestionList.swift; sourceTree = "<group>"; };
@@ -56,8 +64,8 @@
 		324BD8EB249764110040A67E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				324BD8EE249765C00040A67E /* Question */,
 				324BD8EC249764F80040A67E /* QuestionsList */,
+				324BD8EE249765C00040A67E /* Question */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -100,8 +108,19 @@
 			isa = PBXGroup;
 			children = (
 				E356EEAD2379B11C00CF245E /* StackLoader.swift */,
+				324BD8F324979D760040A67E /* JSONParseStructs.swift */,
+				324BD8F1249795CC0040A67E /* StackLoaderProtocols.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		324BD8F72498E61C0040A67E /* UIStuff */ = {
+			isa = PBXGroup;
+			children = (
+				324BD8F92498E6730040A67E /* TagPickerView.swift */,
+				324BD8FB249A18640040A67E /* ActivityIndicatorViewFullScreen.swift */,
+			);
+			path = UIStuff;
 			sourceTree = "<group>";
 		};
 		E394BF0E236EEA6500B9B70B = {
@@ -125,6 +144,7 @@
 			children = (
 				324BD8F02497778A0040A67E /* Model */,
 				324BD8EB249764110040A67E /* ViewControllers */,
+				324BD8F72498E61C0040A67E /* UIStuff */,
 				324BD8EA249763F30040A67E /* Extensions */,
 				E394BF1A236EEA6500B9B70B /* AppDelegate.swift */,
 				E394BF1E236EEA6500B9B70B /* Main.storyboard */,
@@ -167,6 +187,7 @@
 				TargetAttributes = {
 					E394BF16236EEA6500B9B70B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -206,11 +227,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				324BD8F424979D760040A67E /* JSONParseStructs.swift in Sources */,
 				E3A69D222381A27B008030B1 /* DoubleExtension.swift in Sources */,
 				E3165B3A2378136700975748 /* CellQuestionList.swift in Sources */,
 				E356EEAE2379B11D00CF245E /* StackLoader.swift in Sources */,
+				324BD8FC249A18640040A67E /* ActivityIndicatorViewFullScreen.swift in Sources */,
 				E394BF1B236EEA6500B9B70B /* AppDelegate.swift in Sources */,
+				324BD8F2249795CC0040A67E /* StackLoaderProtocols.swift in Sources */,
 				E3165B3C2378309300975748 /* CellQuestion.swift in Sources */,
+				324BD8FA2498E6730040A67E /* TagPickerView.swift in Sources */,
 				E3165B382376AA7F00975748 /* ViewControllerQuestion.swift in Sources */,
 				E3165B362376A9AF00975748 /* ViewControllerQuestionsList.swift in Sources */,
 			);
@@ -366,7 +391,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = stackViewerOrganization.stackViwer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -383,7 +408,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = stackViewerOrganization.stackViwer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

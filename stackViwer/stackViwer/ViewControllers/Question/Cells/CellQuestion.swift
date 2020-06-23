@@ -1,7 +1,3 @@
-/*
- 
- */
-
 import Foundation
 import UIKit
 
@@ -16,7 +12,9 @@ class CellQuestion: UITableViewCell {
     
     
     //вернуть ячейку в начальное состояние
-    func clear() {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
         imageIsAnswer.isHidden = true
         imageIsAnswerWidth.constant = 50
         labelRating.text?.removeAll()
@@ -26,30 +24,24 @@ class CellQuestion: UITableViewCell {
         backgroundColor = .clear
     }
     
-    func configureQuestion() {
-        clear()
+    func configureQuestion(question: QuestionWithBody) {
         backgroundColor = .yellow
         imageIsAnswerWidth.constant = 0
-        if let que = stackLoader.questionDetailed?.question {
-            labelAuthor.text = que.owner.display_name
-            labelRating.text = "\(que.score)"
-            labelDate.text = que.last_edit_date?.smartModified() ?? " "
-            labelAnswer.text = tagRemoved(From: que.body)
-        }
+        labelAuthor.text = question.owner.display_name
+        labelRating.text = "\(question.score)"
+        labelDate.text = question.last_edit_date?.smartModified() ?? " "
+        labelAnswer.text = tagRemoved(From: question.body)
     }
     
-    func configureAnswer(WithIndex index: Int) {
-        clear()
-        if let answer = stackLoader.questionDetailed?.answers[index] {
-            if answer.is_accepted {
-                imageIsAnswer.isHidden = false
-                imageIsAnswerWidth.constant = 50
-            }
-            labelRating.text = "\(answer.score)"
-            labelAuthor.text = answer.owner.display_name
-            labelDate.text = answer.last_activity_date.smartModified()
-            labelAnswer.text = tagRemoved(From: answer.body)
+    func configureAnswer(withAnswer answer: Answer) {
+        if answer.is_accepted {
+            imageIsAnswer.isHidden = false
+            imageIsAnswerWidth.constant = 50
         }
+        labelRating.text = "\(answer.score)"
+        labelAuthor.text = answer.owner.display_name
+        labelDate.text = answer.last_activity_date.smartModified()
+        labelAnswer.text = tagRemoved(From: answer.body)
     }
     
     private func tagRemoved(From str: String) -> String {

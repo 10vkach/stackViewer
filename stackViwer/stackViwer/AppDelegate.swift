@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  stackViwer
-//
-//  Created by mobileBuilder on 03.11.2019.
-//  Copyright © 2019 mobileBuilder. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
