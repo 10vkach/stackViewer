@@ -8,7 +8,6 @@ class ViewControllerQuestion: UITableViewController{
     //MARK: TableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let count = question?.answers.count else { return 0 }
-        print(count + 1)
         return 1 + count
     }
     
