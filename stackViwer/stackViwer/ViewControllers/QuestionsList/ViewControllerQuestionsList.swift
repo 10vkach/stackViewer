@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, QuestionsLoaderDelegate, QuestionLoaderDelegate {
+class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, QuestionsLoaderDelegate, QuestionLoaderDelegate, UITableViewDataSourcePrefetching {
     
     //MARK: Свойства
     //Показывает выбор тэга
@@ -17,6 +17,8 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
     //MARK: ViewController life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.prefetchDataSource = self
         
         pickerView.delegate = self
         activityView.set(inView: navigationController!.view)
@@ -42,7 +44,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
     
     //MARK: TableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stackLoader.questionsList.count
+        return stackLoader.totalQuestions
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,7 +52,11 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
             else {
                 return UITableViewCell()
         }
-        cell.configure(WithQuestion: stackLoader.questionsList[indexPath.row])
+        if indexPath.row >= stackLoader.questionsList.count {
+            
+        } else {
+            cell.configure(WithQuestion: stackLoader.questionsList[indexPath.row])
+        }
         return cell
     }
     
@@ -58,6 +64,18 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         activityView.startAnimating()
         stackLoader.loadQuestionAndAnswers(questionID: stackLoader.questionsList[indexPath.row].question_id)
+    }
+    
+    //MARK: TableViewPrefetching
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let tag = navigationItem.title else { return }
+        guard indexPaths.contains(where: isNotLoadedCell(at:)) else { return }
+        
+        stackLoader.loadNextPage(withTag: tag)
+    }
+    
+    private func isNotLoadedCell(at index: IndexPath) -> Bool {
+        return index.row >= stackLoader.questionsList.count
     }
     
     //MARK: PickerViewDelegate
@@ -113,9 +131,20 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
     
     //MARK: QuestionsLoaderDelegate
     func questionsLoaded() {
-        DispatchQueue.main.async {
-            self.loadedSuccefull()
-        }
+        self.loadedSuccefull()        
+    }
+    
+    func questionsLoaded(atIndeces: [Int]) {
+        print("Загружены страницы \(atIndeces)")
+        tableView.reloadRows(at: indexPathsToReload(newIndeces: atIndeces), with: .automatic)
+    }
+    
+    //Определяет IndexPath'ы новых видимых ячеек, чтобы можно было обновить их
+    private func indexPathsToReload(newIndeces: [Int]) -> [IndexPath] {
+        let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows ?? []
+        let newIndexPaths = newIndeces.map({ IndexPath(row: $0, section: 0) })
+        let newVisibleIndexPaths = Set(indexPathsForVisibleRows).intersection(Set(newIndexPaths))
+        return Array(newVisibleIndexPaths)
     }
     
     func questionsLoadingFail(error: Error) {
@@ -127,7 +156,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
         activityView.stopAnimating()
         guard let questionDetailed = stackLoader.questionDetailed else { return }
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        guard let viewControllerQuestion = storyBoard.instantiateViewController(withIdentifier: "ViewControllerQuestion") as? ViewControllerQuestion else { return }
+        guard let viewControllerQuestion = storyBoard.instantiateViewController(withIdentifier: Constants.questionViewcontroller.rawValue) as? ViewControllerQuestion else { return }
         viewControllerQuestion.question = questionDetailed
         navigationController?.pushViewController(viewControllerQuestion, animated: true)
         
@@ -142,5 +171,5 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
 fileprivate enum Constants: String {
     case errorLoadingQuestionBody = "Loading Body Error"        //Текст сообщения об ошибке, при загрузке тела вопроса
     
-    case openQuestionViewcontroller = "OpenViewControllerQuestion"
+    case questionViewcontroller = "ViewControllerQuestion"
 }

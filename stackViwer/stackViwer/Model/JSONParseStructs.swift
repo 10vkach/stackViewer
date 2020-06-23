@@ -1,8 +1,9 @@
 import Foundation
 
-//MARK: Вопросы начало
+//MARK: Вопросы
 struct QuestionsList: Codable {
     let items: [Question]
+    let total: Int
 }
 
 struct Question: Codable {
@@ -16,9 +17,8 @@ struct Question: Codable {
 struct Owner: Codable {
     let display_name: String
 }
-//Вопросы конец
 
-//MARK: Вопрос подробно начало
+//MARK: Вопрос подробно
 struct QuestionsWithBody: Codable {
     let items: [QuestionWithBody]
 }
@@ -30,9 +30,8 @@ struct QuestionWithBody: Codable {
     let score: Int
     let owner: Owner
 }
-//Вопрос подробно конец
 
-//MARK: Ответы начало
+//MARK: Ответы
 struct Answer: Codable {
     let last_activity_date: Double
     let body: String
@@ -44,7 +43,6 @@ struct Answer: Codable {
 struct AnswersList: Codable {
     let items: [Answer]
 }
-//Ответы конец
 
 //Для хранения в классе
 struct QuestionDetailed {

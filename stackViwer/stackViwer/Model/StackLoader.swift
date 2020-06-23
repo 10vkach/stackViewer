@@ -5,11 +5,15 @@
 
 import Foundation
 
-public class StackLoader {
+class StackLoader {
     
     //MARK: Свойства
+    var totalQuestions: Int = 0                                 //Общее количетсво вопросов
     var questionsList: [Question] = []                          //Тут хранится список загруженных вопросов
     var questionDetailed: QuestionDetailed?                     //Вопрос с телом и ответами
+    var pagesLoaded: Int = 0                                    //Количество загруженных страниц
+    var isPageLoading = false                                     //Происходит ли загрузка в данный момент
+    
     var questionsLoaderDelegate: QuestionsLoaderDelegate?
     var questionLoaderDelegate: QuestionLoaderDelegate?
     
@@ -32,12 +36,14 @@ public class StackLoader {
     //MARK: Загрузить вопросы
     //Загрузить первую страницу вопросов (использовать при смене тэга и запуске программы)
     func loadFirstPage(withTag tag: String) {
-        
+        guard isPageLoading == false else { return }
         //Загрузить данные в отдельном потоке
         if let url = getURL(ForPage: 1, WithTag: tag) {
+            isPageLoading = true
             
             let task = URLSession.shared.dataTask(with: url,
                                                   completionHandler: {
+                                                        self.isPageLoading = false
                                                         self.parseFirstPageResponse(data: $0,
                                                                                     response: $1,
                                                                                     error: $2)
@@ -48,9 +54,6 @@ public class StackLoader {
         }
     }
     
-    //Загрузить ещё одну страницу вопросов (не использовать для первой пачки вопросов)
-    //Эту функцию надо сделать
-    
     //Обработать ответ от сервера
     private func parseFirstPageResponse(data: Data?,
                                         response: URLResponse?,
@@ -58,7 +61,9 @@ public class StackLoader {
         
         //Если получили ошибку, то обработать её и прерваться
         if let errorSafe = error {
-            questionsLoaderDelegate?.questionsLoadingFail(error: errorSafe)
+            DispatchQueue.main.async {
+                self.questionsLoaderDelegate?.questionsLoadingFail(error: errorSafe)
+            }
             return
         }
         
@@ -67,9 +72,66 @@ public class StackLoader {
             do {
                 let questionsListResponse: QuestionsList = try JSONDecoder().decode(QuestionsList.self, from: dataSafe)
                 questionsList = questionsListResponse.items
-                questionsLoaderDelegate?.questionsLoaded()
+                totalQuestions = questionsListResponse.total
+                pagesLoaded = 1
+                DispatchQueue.main.async {
+                    self.questionsLoaderDelegate?.questionsLoaded()
+                }
             } catch let error {
-                questionsLoaderDelegate?.questionsLoadingFail(error: error)
+                DispatchQueue.main.async {
+                    self.questionsLoaderDelegate?.questionsLoadingFail(error: error)
+                }
+            }
+        }
+    }
+    
+    //Загрузить ещё одну страницу вопросов (не использовать для первой пачки вопросов)
+    func loadNextPage(withTag tag: String) {
+        guard isPageLoading == false else { return }
+        guard let url = getURL(ForPage: pagesLoaded + 1, WithTag: tag) else { return }
+        
+        print("loadNextPage \(pagesLoaded)")
+        isPageLoading = true
+        let task = URLSession.shared.dataTask(with: url,
+                                              completionHandler: {
+                                                    self.isPageLoading = false
+                                                    self.parseNextPageResponse(data: $0,
+                                                                              response: $1,
+                                                                              error: $2)
+                                                    })
+        loadingQueue.async {
+            task.resume()
+        }
+    }
+    
+    private func parseNextPageResponse(data: Data?,
+                                       response: URLResponse?,
+                                       error: Error?) {
+        print("parseNewPage")
+        //Если получили ошибку, то обработать её и прерваться
+        if let errorSafe = error {
+            DispatchQueue.main.async {
+                self.questionsLoaderDelegate?.questionsLoadingFail(error: errorSafe)
+            }
+            return
+        }
+        
+        if let dataSafe = data {
+            //распарсить данные и запихать их в массив
+            do {
+                let questionsListResponse: QuestionsList = try JSONDecoder().decode(QuestionsList.self, from: dataSafe)
+                let startIndex = questionsList.count
+                questionsList += questionsListResponse.items
+                pagesLoaded += 1
+                let endIndex = questionsList.count
+                let newIndeces = (startIndex..<endIndex).map({ $0 })
+                DispatchQueue.main.async {
+                    self.questionsLoaderDelegate?.questionsLoaded(atIndeces: newIndeces)
+                }
+            } catch let error {
+                DispatchQueue.main.async {
+                    self.questionsLoaderDelegate?.questionsLoadingFail(error: error)
+                }
             }
         }
     }
@@ -218,7 +280,9 @@ public class StackLoader {
             URLQueryItem(name: "pagesize", value: "20"),
             URLQueryItem(name: "sort", value: "creation"),
             URLQueryItem(name: "site", value: "stackoverflow"),
-            URLQueryItem(name: "order", value: "desc")
+            URLQueryItem(name: "order", value: "desc"),
+            //Чтобы в ответе было общее количество вопросов.
+            URLQueryItem(name: "filter", value: "!9_bDE.BDp")
         ]
         return request.url
     }

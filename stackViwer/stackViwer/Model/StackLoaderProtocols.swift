@@ -7,6 +7,7 @@ import Foundation
 //События загрузки списка вопросов
 protocol QuestionsLoaderDelegate {
     func questionsLoaded()
+    func questionsLoaded(atIndeces: [Int])
     func questionsLoadingFail(error: Error)
 }
 
