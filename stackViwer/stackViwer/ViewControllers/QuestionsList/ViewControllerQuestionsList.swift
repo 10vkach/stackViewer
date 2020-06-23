@@ -53,7 +53,7 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
                 return UITableViewCell()
         }
         if indexPath.row >= stackLoader.questionsList.count {
-            
+            cell.configureForLoading()
         } else {
             cell.configure(WithQuestion: stackLoader.questionsList[indexPath.row])
         }
@@ -135,8 +135,10 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
     }
     
     func questionsLoaded(atIndeces: [Int]) {
-        print("Загружены страницы \(atIndeces)")
-        tableView.reloadRows(at: indexPathsToReload(newIndeces: atIndeces), with: .automatic)
+        indexPathsToReload(newIndeces: atIndeces).forEach({ indexPath in
+            guard let cell = self.tableView.cellForRow(at: indexPath) as? CellQuestionList else { return }
+            cell.configure(WithQuestion: stackLoader.questionsList[indexPath.row])
+        })
     }
     
     //Определяет IndexPath'ы новых видимых ячеек, чтобы можно было обновить их

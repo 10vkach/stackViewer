@@ -9,17 +9,6 @@ class CellQuestionList: UITableViewCell {
     @IBOutlet weak var labelQuestionShortText: UILabel!         //Короткое описание вопроса (максимум 2 строки)
     @IBOutlet weak var labelAnswersCount: UILabel!              //Количество ответов
     
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        labelAuthorName.text?.removeAll()
-        labelAskedTime.text?.removeAll()
-        labelModified.text?.removeAll()
-        labelQuestionShortText.text?.removeAll()
-        labelAnswersCount.text?.removeAll()
-    }
-    
     func configure(WithQuestion question: Question) {
         labelAuthorName.text = "\(question.owner.display_name)"
         labelQuestionShortText.text = question.title
@@ -27,7 +16,19 @@ class CellQuestionList: UITableViewCell {
         labelAskedTime.text = getSmartTime(seconds: question.last_edit_date)
         if let empty = labelAskedTime.text?.isEmpty, !empty {
             labelModified.text = "modified"
+        } else {
+            labelModified.text?.removeAll()
         }
+        labelQuestionShortText.backgroundColor = nil
+    }
+    
+    func configureForLoading() {
+        labelAuthorName.text = "Loading"
+        labelQuestionShortText.text = "Loading"
+        labelAnswersCount.text = "Loading"
+        labelAskedTime.text = "Loading"
+        labelModified.text = "Loading"
+        labelQuestionShortText.backgroundColor = .red
     }
     
     private func getSmartTime(seconds: Double?) -> String {

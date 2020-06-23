@@ -90,7 +90,6 @@ class StackLoader {
         guard isPageLoading == false else { return }
         guard let url = getURL(ForPage: pagesLoaded + 1, WithTag: tag) else { return }
         
-        print("loadNextPage \(pagesLoaded)")
         isPageLoading = true
         let task = URLSession.shared.dataTask(with: url,
                                               completionHandler: {
@@ -107,7 +106,6 @@ class StackLoader {
     private func parseNextPageResponse(data: Data?,
                                        response: URLResponse?,
                                        error: Error?) {
-        print("parseNewPage")
         //Если получили ошибку, то обработать её и прерваться
         if let errorSafe = error {
             DispatchQueue.main.async {
