@@ -17,8 +17,6 @@ class StackLoader {
     var questionsLoaderDelegate: QuestionsLoaderDelegate?
     var questionLoaderDelegate: QuestionLoaderDelegate?
     
-    //Поток в котором будет происходить загрузка и парс данных
-    private let loadingQueue = DispatchQueue.global(qos: .utility)
     //Группа для загрузки тела вопросов и ответов на него
     private let dispatchGroupForQuestionLoad = DispatchGroup()
     //Пустая "заглушка", нужна при сохранении распасенного ответа
@@ -48,9 +46,7 @@ class StackLoader {
                                                                                     response: $1,
                                                                                     error: $2)
                                                         })
-            loadingQueue.async {
-                task.resume()
-            }
+            task.resume()
         }
     }
     
@@ -98,9 +94,7 @@ class StackLoader {
                                                                               response: $1,
                                                                               error: $2)
                                                     })
-        loadingQueue.async {
             task.resume()
-        }
     }
     
     private func parseNextPageResponse(data: Data?,
@@ -157,9 +151,7 @@ class StackLoader {
                                                    response: $1,
                                                    error: $2)
                 })
-            loadingQueue.async {
-                task.resume()
-            }
+            task.resume()
         }
     }
     
@@ -203,9 +195,7 @@ class StackLoader {
                                       response: $1,
                                       error: $2)
                 })
-            loadingQueue.async {
                 task.resume()
-            }
         }
     }
     
