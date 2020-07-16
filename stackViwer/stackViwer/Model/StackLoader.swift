@@ -274,4 +274,8 @@ class StackLoader {
         ]
         return request.url
     }
+    
+    deinit {
+        print("deinit StackLoader")
+    }
 }

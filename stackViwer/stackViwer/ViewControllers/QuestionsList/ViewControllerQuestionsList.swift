@@ -167,6 +167,10 @@ class ViewControllerQuestionsList: UITableViewController, UIPickerViewDelegate, 
     func questionLoadingFail(error: Error) {
         loadedFail(WithError: error, Title: Constants.errorLoadingQuestionBody.rawValue)
     }
+    
+    deinit {
+        print("deinit ViewControllerQuestionsList")
+    }
 }
 
 //MARK: Constants
