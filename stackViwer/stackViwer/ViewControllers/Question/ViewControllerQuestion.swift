@@ -26,4 +26,8 @@ class ViewControllerQuestion: UITableViewController{
         
         return cell
     }
+    
+    deinit {
+        print("deinit ViewControllerQuestion")
+    }
 }

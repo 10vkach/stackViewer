@@ -14,8 +14,8 @@ class StackLoader {
     var pagesLoaded: Int = 0                                    //Количество загруженных страниц
     var isPageLoading = false                                     //Происходит ли загрузка в данный момент
     
-    var questionsLoaderDelegate: QuestionsLoaderDelegate?
-    var questionLoaderDelegate: QuestionLoaderDelegate?
+    weak var questionsLoaderDelegate: QuestionsLoaderDelegate?
+    weak var questionLoaderDelegate: QuestionLoaderDelegate?
     
     //Группа для загрузки тела вопросов и ответов на него
     private let dispatchGroupForQuestionLoad = DispatchGroup()
@@ -273,5 +273,9 @@ class StackLoader {
             URLQueryItem(name: "filter", value: "!9_bDE.BDp")
         ]
         return request.url
+    }
+    
+    deinit {
+        print("deinit StackLoader")
     }
 }

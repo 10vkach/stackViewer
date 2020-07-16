@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32486B5C24B8AAA10009730F /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32486B5B24B8AAA10009730F /* StartViewController.swift */; };
 		324BD8F2249795CC0040A67E /* StackLoaderProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8F1249795CC0040A67E /* StackLoaderProtocols.swift */; };
 		324BD8F424979D760040A67E /* JSONParseStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8F324979D760040A67E /* JSONParseStructs.swift */; };
 		324BD8FA2498E6730040A67E /* TagPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324BD8F92498E6730040A67E /* TagPickerView.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		32486B5B24B8AAA10009730F /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		324BD8F1249795CC0040A67E /* StackLoaderProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackLoaderProtocols.swift; sourceTree = "<group>"; };
 		324BD8F324979D760040A67E /* JSONParseStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParseStructs.swift; sourceTree = "<group>"; };
 		324BD8F92498E6730040A67E /* TagPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPickerView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32486B5A24B8AA780009730F /* StartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				32486B5B24B8AAA10009730F /* StartViewController.swift */,
+			);
+			path = StartViewController;
+			sourceTree = "<group>";
+		};
 		324BD8EA249763F30040A67E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +74,7 @@
 		324BD8EB249764110040A67E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				32486B5A24B8AA780009730F /* StartViewController */,
 				324BD8EC249764F80040A67E /* QuestionsList */,
 				324BD8EE249765C00040A67E /* Question */,
 			);
@@ -232,6 +243,7 @@
 				E3165B3A2378136700975748 /* CellQuestionList.swift in Sources */,
 				E356EEAE2379B11D00CF245E /* StackLoader.swift in Sources */,
 				324BD8FC249A18640040A67E /* ActivityIndicatorViewFullScreen.swift in Sources */,
+				32486B5C24B8AAA10009730F /* StartViewController.swift in Sources */,
 				E394BF1B236EEA6500B9B70B /* AppDelegate.swift in Sources */,
 				324BD8F2249795CC0040A67E /* StackLoaderProtocols.swift in Sources */,
 				E3165B3C2378309300975748 /* CellQuestion.swift in Sources */,
