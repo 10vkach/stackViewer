@@ -5,14 +5,14 @@
 import Foundation
 
 //События загрузки списка вопросов
-protocol QuestionsLoaderDelegate {
+protocol QuestionsLoaderDelegate: AnyObject {
     func questionsLoaded()
     func questionsLoaded(atIndeces: [Int])
     func questionsLoadingFail(error: Error)
 }
 
 //События загрузки определённого вопроса
-protocol QuestionLoaderDelegate {
+protocol QuestionLoaderDelegate: AnyObject {
     func questionLoaded()
     func questionLoadingFail(error: Error)
 }

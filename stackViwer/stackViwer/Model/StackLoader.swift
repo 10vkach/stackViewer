@@ -14,8 +14,8 @@ class StackLoader {
     var pagesLoaded: Int = 0                                    //Количество загруженных страниц
     var isPageLoading = false                                     //Происходит ли загрузка в данный момент
     
-    var questionsLoaderDelegate: QuestionsLoaderDelegate?
-    var questionLoaderDelegate: QuestionLoaderDelegate?
+    weak var questionsLoaderDelegate: QuestionsLoaderDelegate?
+    weak var questionLoaderDelegate: QuestionLoaderDelegate?
     
     //Группа для загрузки тела вопросов и ответов на него
     private let dispatchGroupForQuestionLoad = DispatchGroup()
